@@ -1,0 +1,6 @@
+w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w;
+w,p,p,p,p,p,p,p,p,p,t,p,p,p,p,p,p,p,p,w;
+w,r-du,r-lu,r-lu,r-lu,r-lu,r-lu,r-lu,r-lu,r-ldu,r-lu,r-lu,r-lu,r-lu,r-lu,r-lu,r-lu,r-lu,r-lu,w;
+w,r-rd,r-rd,r-rd,r-rd,r-rd,r-rd,r-rd,r-rd,r-rd,r-rud,r-rd,r-rd,r-rd,r-rd,r-rd,r-rd,r-rd,r-ud,w;
+w,p,p,p,p,p,p,p,p,x,e-u,p,p,p,p,p,p,p,p,w;
+w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w;
