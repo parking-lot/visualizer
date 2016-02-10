@@ -12,13 +12,10 @@ body {
   align-items: center;
   justify-content: center;
 }
-#sprites {
-  display: none;
-}
-#controls {
+.controls {
   text-align: center;
 }
-#controls img {
+.controls img {
   width: 50px;
   height: 50px;
 }
