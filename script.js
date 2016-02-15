@@ -12,7 +12,8 @@ function draw(parkingLot) {
   var ctx = canvas.getContext("2d");
   for (var i = 0; i < height; i++) {
     for (var j = 0; j < width; j++) {
-      switch (parkingLot[i][j].substring(0, 1)) {
+      var currentSpace = parkingLot[i][j]
+      switch (currentSpace.substring(0, 1)) {
         case "w":
       	  ctx.fillStyle = "#f00";
       	  ctx.fillRect(j*scale, i*scale, scale, scale);
@@ -24,8 +25,37 @@ function draw(parkingLot) {
       	  ctx.fillRect(j*scale, i*scale, scale, scale);
           break;
         case "p":
-          ctx.fillStyle = "#07c";
-      	  ctx.fillRect(j*scale, i*scale, scale, scale);
+          switch(currentSpace.substring(1,2)){
+            case "l":
+              ctx.fillStyle = "#f7df1e";
+              ctx.fillRect(j*scale, i*scale, scale, scale);
+              ctx.fillStyle = "#A9A9A9";
+              ctx.fillRect(j*scale, i*scale + 5, scale-5, scale-10);
+              break;
+            case "r":
+              ctx.fillStyle = "#f7df1e";
+              ctx.fillRect(j*scale, i*scale, scale, scale);
+              ctx.fillStyle = "#A9A9A9";
+              ctx.fillRect(j*scale+5, i*scale + 5, scale, scale-10);
+              break;             
+            case "u":
+              ctx.fillStyle = "#f7df1e";
+              ctx.fillRect(j*scale, i*scale, scale, scale);
+              ctx.fillStyle = "#A9A9A9";
+              ctx.fillRect(j*scale+5, i*scale + 5, scale, scale-10);
+              break;
+            case "d":
+              ctx.fillStyle = "#f7df1e";
+              ctx.fillRect(j*scale, i*scale, scale, scale);
+              ctx.fillStyle = "#A9A9A9";
+              ctx.fillRect(j*scale+5, i*scale + 5, scale, scale-10);
+              break;
+            default:
+              ctx.fillStyle = "#A9A9A9";
+              ctx.fillRect(j*scale+5, i*scale + 5, scale, scale-10);
+              break;
+          }
+          
           //ctx.fillStyle = "#fff";
       	  //ctx.fillRect(j*scale-5, i*scale, scale-10, scale-5);
       	  break;
