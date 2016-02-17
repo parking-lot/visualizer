@@ -1,7 +1,29 @@
-w   ,w   ,w   ,w   ,w   ,w   ,w   ,w   ,w   ,0
+w   ,w   ,w   ,w   ,w   ,w   ,w   ,w   ,w   ,g0
 w   ,rd  ,rl  ,cl0 ,rl  ,rld ,rl  ,rl  ,rl  ,w
 w   ,rdr ,pl  ,pr  ,rul ,rdr ,pl  ,pr  ,rul ,w
 w   ,rdr ,pl  ,pr  ,rul ,rdr ,pl  ,fr7 ,cul9,w
+w   ,rdr ,pl  ,fr1 ,cul4,rdr ,pl  ,fr8 ,rul ,w
+w   ,rdr ,pl  ,pr  ,rul ,rdr ,fl6 ,pr  ,rul ,w
+w   ,rdr ,pl  ,fr2 ,rul ,cdr5,pl  ,pr  ,rul ,w
+x   ,rlr ,pl  ,pr  ,rul ,rdr ,pl  ,pr  ,rul ,w
+e   ,rr  ,rr  ,cr3 ,rru ,rr  ,rr  ,rr  ,ru  ,w
+w   ,w   ,w   ,w   ,w   ,w   ,w   ,w   ,w   ,w
+!
+w   ,w   ,w   ,w   ,w   ,w   ,w   ,w   ,w   ,g0
+w   ,rd  ,rl  ,cl0 ,rl  ,rld ,rl  ,rl  ,rl  ,w
+w   ,rdr ,pl  ,pr  ,rul ,rdr ,pl  ,pr  ,cul9 ,w
+w   ,rdr ,pl  ,pr  ,rul ,rdr ,pl  ,fr7 ,rul,w
+w   ,rdr ,pl  ,fr1 ,cul4,rdr ,pl  ,fr8 ,rul ,w
+w   ,rdr ,pl  ,pr  ,rul ,rdr ,fl6 ,pr  ,rul ,w
+w   ,rdr ,pl  ,fr2 ,rul ,cdr5,pl  ,pr  ,rul ,w
+x   ,rlr ,pl  ,pr  ,rul ,rdr ,pl  ,pr  ,rul ,w
+e   ,rr  ,rr  ,cr3 ,rru ,rr  ,rr  ,rr  ,ru  ,w
+w   ,w   ,w   ,w   ,w   ,w   ,w   ,w   ,w   ,w
+!
+w   ,w   ,w   ,w   ,w   ,w   ,w   ,w   ,w   ,g0
+w   ,rd  ,rl  ,cl0 ,rl  ,rld ,rl  ,rl  ,cl9  ,w
+w   ,rdr ,pl  ,pr  ,rul ,rdr ,pl  ,pr  ,rul ,w
+w   ,rdr ,pl  ,pr  ,rul ,rdr ,pl  ,fr7 ,rul ,w
 w   ,rdr ,pl  ,fr1 ,cul4,rdr ,pl  ,fr8 ,rul ,w
 w   ,rdr ,pl  ,pr  ,rul ,rdr ,fl6 ,pr  ,rul ,w
 w   ,rdr ,pl  ,fr2 ,rul ,cdr5,pl  ,pr  ,rul ,w

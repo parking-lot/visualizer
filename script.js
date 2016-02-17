@@ -1,12 +1,13 @@
 var interval;
-var scale = 40;
-var pos = 0;
-var frames;
+var scale = 45;
+var pos = -1;
+var frames = new Array();
+var colors = ["#0c7", "#000080", "#00008B", "#0000CD", "#0000FF", "#006400", "#008000", "#008080", "#008B8B", "#00BFFF", "#00CED1", "#00FA9A", "#00FF00", "#00FF7F", "#00FFFF", "#00FFFF", "#191970", "#1E90FF", "#20B2AA", "#228B22", "#2E8B57", "#2F4F4F", "#2F4F4F", "#32CD32", "#3CB371", "#40E0D0", "#4169E1", "#4682B4", "#483D8B", "#48D1CC", "#4B0082", "#556B2F", "#5F9EA0", "#6495ED", "#663399", "#66CDAA", "#696969", "#696969", "#6A5ACD", "#6B8E23", "#708090", "#708090", "#778899", "#778899", "#7B68EE", "#7CFC00", "#7FFF00", "#7FFFD4", "#800000", "#800080", "#808000", "#808080", "#808080", "#87CEEB", "#87CEFA", "#8A2BE2", "#8B0000", "#8B008B", "#8B4513", "#8FBC8F", "#90EE90", "#9370DB", "#9400D3", "#98FB98", "#9932CC", "#9ACD32", "#A0522D", "#A52A2A", "#A9A9A9", "#A9A9A9", "#ADD8E6", "#ADFF2F", "#AFEEEE", "#B0C4DE", "#B0E0E6", "#B22222", "#B8860B", "#BA55D3", "#BC8F8F", "#BDB76B", "#C0C0C0", "#C71585", "#CD5C5C", "#CD853F", "#D2691E", "#D2B48C", "#D3D3D3", "#D3D3D3", "#D8BFD8", "#DA70D6", "#DAA520", "#DB7093", "#DC143C", "#DCDCDC", "#DDA0DD", "#DEB887", "#E0FFFF", "#E6E6FA", "#E9967A", "#EE82EE", "#EEE8AA", "#F08080", "#F0E68C", "#F0F8FF", "#F0FFF0", "#F0FFFF", "#F4A460", "#F5DEB3", "#F5F5DC", "#F5F5F5", "#F5FFFA", "#F8F8FF", "#FA8072", "#FAEBD7", "#FAF0E6", "#FAFAD2", "#FDF5E6", "#FF0000", "#FF00FF", "#FF00FF", "#FF1493", "#FF4500", "#FF6347", "#FF69B4", "#FF7F50", "#FF8C00", "#FFA07A", "#FFA500", "#FFB6C1", "#FFC0CB", "#FFD700", "#FFDAB9", "#FFDEAD", "#FFE4B5", "#FFE4C4", "#FFE4E1", "#FFEBCD", "#FFEFD5", "#FFF0F5", "#FFF5EE", "#FFF8DC", "#FFFACD", "#FFFAF0", "#FFFAFA", "#FFFF00", "#FFFFE0", "#FFFFF0", "#FFFFFF"];
 
-function drawCar(ctx, i, j, dir, reverse) {
+function drawCar(ctx, i, j, id, dir, reverse) {
   var reverseDict = {"l": "r", "r": "l", "u": "d", "d": "u"};
   if (reverse) dir = reverseDict[dir];
-  ctx.fillStyle = "#"+((1<<24)*Math.random()|0).toString(16); //"#07c";
+  ctx.fillStyle = colors[(id*4)%colors.length];
   ctx.beginPath();
   switch(dir){
     case "l":
@@ -37,7 +38,7 @@ function drawCar(ctx, i, j, dir, reverse) {
 function drawParkingSpace(ctx, i, j, dir) {
   switch (dir) {
   case "l":
-    
+
     ctx.fillStyle = "#f7df1e";
     ctx.fillRect(j*scale, i*scale, scale, scale);
     ctx.fillStyle = "#A9A9A9";
@@ -67,45 +68,40 @@ function drawParkingSpace(ctx, i, j, dir) {
 function drawRoad(ctx, i, j, dir) {
   ctx.fillStyle = "#000";
   ctx.fillRect(j*scale, i*scale, scale, scale);
-    switch(dir){
-              case "r":
-                ctx.beginPath();
-                ctx.moveTo(j*scale+scale-8,i*scale+10);
-                ctx.lineTo(j*scale+scale,i*scale+scale/2);
-                ctx.lineTo(j*scale+scale-8,i*scale+scale-10)
-                ctx.strokeStyle = "#ffffff";
-                ctx.stroke();
-            
-                break;
-              case "l":
-                ctx.beginPath();
-                ctx.moveTo(j*scale+8,i*scale+10);
-                ctx.lineTo(j*scale,i*scale+scale/2);
-                ctx.lineTo(j*scale+8,i*scale+scale-10)
-                ctx.strokeStyle = "#ffffff";
-                ctx.stroke();
-                break;
-              case "u":
-                ctx.beginPath();
-                ctx.moveTo(j*scale+10,i*scale+8);
-                ctx.lineTo(j*scale+scale/2,i*scale);
-                ctx.lineTo(j*scale+scale-10,i*scale+8)
-                ctx.strokeStyle = "#ffffff";
-                ctx.stroke();
-                break;
-              case "d":
-                ctx.beginPath();
-                ctx.moveTo(j*scale+10,i*scale+scale-8);
-                ctx.lineTo(j*scale+scale/2,i*scale+scale);
-                ctx.lineTo(j*scale+scale-10,i*scale+scale-8)
-                ctx.strokeStyle = "#ffffff";
-                ctx.stroke();
-                
-
-                break;
-              default:
-              break
-            }
+  switch(dir){
+    case "r":
+      ctx.beginPath();
+      ctx.moveTo(j*scale+scale-8,i*scale+10);
+      ctx.lineTo(j*scale+scale,i*scale+scale/2);
+      ctx.lineTo(j*scale+scale-8,i*scale+scale-10)
+      ctx.strokeStyle = "#ffffff";
+      ctx.stroke();
+      break;
+    case "l":
+      ctx.beginPath();
+      ctx.moveTo(j*scale+8,i*scale+10);
+      ctx.lineTo(j*scale,i*scale+scale/2);
+      ctx.lineTo(j*scale+8,i*scale+scale-10)
+      ctx.strokeStyle = "#ffffff";
+      ctx.stroke();
+      break;
+    case "u":
+      ctx.beginPath();
+      ctx.moveTo(j*scale+10,i*scale+8);
+      ctx.lineTo(j*scale+scale/2,i*scale);
+      ctx.lineTo(j*scale+scale-10,i*scale+8)
+      ctx.strokeStyle = "#ffffff";
+      ctx.stroke();
+      break;
+    case "d":
+      ctx.beginPath();
+      ctx.moveTo(j*scale+10,i*scale+scale-8);
+      ctx.lineTo(j*scale+scale/2,i*scale+scale);
+      ctx.lineTo(j*scale+scale-10,i*scale+scale-8)
+      ctx.strokeStyle = "#ffffff";
+      ctx.stroke();
+      break;
+  }
 }
 
 function drawWall(ctx, i, j) {
@@ -113,8 +109,8 @@ function drawWall(ctx, i, j) {
   ctx.fillRect(j*scale, i*scale, scale, scale);
 }
 
-function drawTarget(ctx, i, j) {
-  ctx.fillStyle = "#0c7";
+function drawTarget(ctx, i, j, id) {
+  ctx.fillStyle = colors[(id*4)%colors.length];
   ctx.fillRect(j*scale, i*scale, scale, scale);
 }
 
@@ -137,17 +133,17 @@ function draw(parkingLot) {
         drawRoad(ctx, i, j, currentSpace.substring(1,2));
       else if (key == "c") {
         drawRoad(ctx, i, j, currentSpace.substring(1,2));
-        drawCar(ctx, i, j, currentSpace.substring(1,2));
+        drawCar(ctx, i, j, parseInt(currentSpace.match(/\d+/)[0]), currentSpace.substring(1,2));
       }
       else if (key == "p")
         drawParkingSpace(ctx, i, j, currentSpace.substring(1,2));
       else if (key == "f") {
         drawParkingSpace(ctx, i, j, currentSpace.substring(1,2));
-        drawCar(ctx, i, j, currentSpace.substring(1,2), true);
+        drawCar(ctx, i, j, parseInt(currentSpace.match(/\d+/)[0]), currentSpace.substring(1,2), true);
       }
-      else
-        drawTarget(ctx, i, j);
-        
+      else if (key == "g")
+        drawTarget(ctx, i, j, parseInt(currentSpace.match(/\d+/)[0]));
+
     }
   }
 }
@@ -167,18 +163,23 @@ function fwd() {
 }
 
 function load(filePath) {
-    var reader = new FileReader();
-    if (filePath.files && filePath.files[0]) {
-        reader.onload = function(e) {
-            frames = [parseMap(e.target.result)];
-        };
-        reader.readAsText(filePath.files[0]);
-    }
-    else return false;
-    return true;
+  var reader = new FileReader();
+  if (filePath.files && filePath.files[0]) {
+    reader.onload = function(e) {
+      var maps = e.target.result.split("!\n")
+      for (var i = 0; i < maps.length; i++) {
+        frames.push(parseMap(maps[i]));
+      }
+      fwd();
+    };
+    reader.readAsText(filePath.files[0]);
+  }
+  else return false;
+  return true;
 }
 
 function play() {
+  clearInterval(interval);
   interval = setInterval(function() {
     pos++;
     if (pos >= frames.length) pos = 0;
@@ -198,7 +199,6 @@ function parseMap(text) {
         }
         frame.push(row);
     }
-    console.log(JSON.stringify(frame));
     return frame;
 }
 
