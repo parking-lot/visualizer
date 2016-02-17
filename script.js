@@ -166,7 +166,7 @@ function load(filePath) {
   var reader = new FileReader();
   if (filePath.files && filePath.files[0]) {
     reader.onload = function(e) {
-      var maps = e.target.result.split("!\n")
+      var maps = e.target.result.toLowerCase().split("!\n")
       for (var i = 0; i < maps.length; i++) {
         frames.push(parseMap(maps[i]));
       }
