@@ -1,10 +1,10 @@
 w   ,w   ,w   ,w   ,w   ,w   ,w   ,w   ,w   ,0
-w   ,rd  ,rl  ,rl  ,rl  ,rld ,rl  ,rl  ,rl  ,w
+w   ,rd  ,rl  ,cl  ,rl  ,rld ,rl  ,rl  ,rl  ,w
 w   ,rdr ,pl  ,pr  ,rul ,rdr ,pl  ,pr  ,rul ,w
-w   ,rdr ,pl  ,pr  ,rul ,rdr ,pl  ,pr  ,rul ,w
-w   ,rdr ,pl  ,pr  ,rul ,rdr ,pl  ,pr  ,rul ,w
-w   ,rdr ,pl  ,pr  ,rul ,rdr ,pl  ,pr  ,rul ,w
-w   ,rdr ,pl  ,pr  ,rul ,rdr ,pl  ,pr  ,rul ,w
+w   ,rdr ,pl  ,pr  ,rul ,rdr ,pl  ,fr  ,rul ,w
+w   ,rdr ,pl  ,fr  ,cul ,rdr ,pl  ,fr  ,cul ,w
+w   ,rdr ,pl  ,pr  ,rul ,rdr ,fl  ,pr  ,rul ,w
+w   ,rdr ,pl  ,fr  ,rul ,cdr ,pl  ,pr  ,rul ,w
 x   ,rlr ,pl  ,pr  ,rul ,rdr ,pl  ,pr  ,rul ,w
-e   ,rr  ,rr  ,rr  ,rru ,rr  ,rr  ,rr  ,ru  ,w
+e   ,rr  ,rr  ,cr  ,rru ,rr  ,rr  ,rr  ,ru  ,w
 w   ,w   ,w   ,w   ,w   ,w   ,w   ,w   ,w   ,w
