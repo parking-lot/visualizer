@@ -37,6 +37,7 @@ function drawCar(ctx, i, j, dir, reverse) {
 function drawParkingSpace(ctx, i, j, dir) {
   switch (dir) {
   case "l":
+    
     ctx.fillStyle = "#f7df1e";
     ctx.fillRect(j*scale, i*scale, scale, scale);
     ctx.fillStyle = "#A9A9A9";
@@ -66,6 +67,45 @@ function drawParkingSpace(ctx, i, j, dir) {
 function drawRoad(ctx, i, j, dir) {
   ctx.fillStyle = "#000";
   ctx.fillRect(j*scale, i*scale, scale, scale);
+    switch(dir){
+              case "r":
+                ctx.beginPath();
+                ctx.moveTo(j*scale+scale-8,i*scale+10);
+                ctx.lineTo(j*scale+scale,i*scale+scale/2);
+                ctx.lineTo(j*scale+scale-8,i*scale+scale-10)
+                ctx.strokeStyle = "#ffffff";
+                ctx.stroke();
+            
+                break;
+              case "l":
+                ctx.beginPath();
+                ctx.moveTo(j*scale+8,i*scale+10);
+                ctx.lineTo(j*scale,i*scale+scale/2);
+                ctx.lineTo(j*scale+8,i*scale+scale-10)
+                ctx.strokeStyle = "#ffffff";
+                ctx.stroke();
+                break;
+              case "u":
+                ctx.beginPath();
+                ctx.moveTo(j*scale+10,i*scale+8);
+                ctx.lineTo(j*scale+scale/2,i*scale);
+                ctx.lineTo(j*scale+scale-10,i*scale+8)
+                ctx.strokeStyle = "#ffffff";
+                ctx.stroke();
+                break;
+              case "d":
+                ctx.beginPath();
+                ctx.moveTo(j*scale+10,i*scale+scale-8);
+                ctx.lineTo(j*scale+scale/2,i*scale+scale);
+                ctx.lineTo(j*scale+scale-10,i*scale+scale-8)
+                ctx.strokeStyle = "#ffffff";
+                ctx.stroke();
+                
+
+                break;
+              default:
+              break
+            }
 }
 
 function drawWall(ctx, i, j) {
