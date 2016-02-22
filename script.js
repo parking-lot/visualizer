@@ -4,6 +4,11 @@ var pos = -1;
 var frames = new Array();
 var colors = ["#0c7", "#000080", "#00008B", "#0000CD", "#0000FF", "#006400", "#008000", "#008080", "#008B8B", "#00BFFF", "#00CED1", "#00FA9A", "#00FF00", "#00FF7F", "#00FFFF", "#00FFFF", "#191970", "#1E90FF", "#20B2AA", "#228B22", "#2E8B57", "#2F4F4F", "#2F4F4F", "#32CD32", "#3CB371", "#40E0D0", "#4169E1", "#4682B4", "#483D8B", "#48D1CC", "#4B0082", "#556B2F", "#5F9EA0", "#6495ED", "#663399", "#66CDAA", "#696969", "#696969", "#6A5ACD", "#6B8E23", "#708090", "#708090", "#778899", "#778899", "#7B68EE", "#7CFC00", "#7FFF00", "#7FFFD4", "#800000", "#800080", "#808000", "#808080", "#808080", "#87CEEB", "#87CEFA", "#8A2BE2", "#8B0000", "#8B008B", "#8B4513", "#8FBC8F", "#90EE90", "#9370DB", "#9400D3", "#98FB98", "#9932CC", "#9ACD32", "#A0522D", "#A52A2A", "#A9A9A9", "#A9A9A9", "#ADD8E6", "#ADFF2F", "#AFEEEE", "#B0C4DE", "#B0E0E6", "#B22222", "#B8860B", "#BA55D3", "#BC8F8F", "#BDB76B", "#C0C0C0", "#C71585", "#CD5C5C", "#CD853F", "#D2691E", "#D2B48C", "#D3D3D3", "#D3D3D3", "#D8BFD8", "#DA70D6", "#DAA520", "#DB7093", "#DC143C", "#DCDCDC", "#DDA0DD", "#DEB887", "#E0FFFF", "#E6E6FA", "#E9967A", "#EE82EE", "#EEE8AA", "#F08080", "#F0E68C", "#F0F8FF", "#F0FFF0", "#F0FFFF", "#F4A460", "#F5DEB3", "#F5F5DC", "#F5F5F5", "#F5FFFA", "#F8F8FF", "#FA8072", "#FAEBD7", "#FAF0E6", "#FAFAD2", "#FDF5E6", "#FF0000", "#FF00FF", "#FF00FF", "#FF1493", "#FF4500", "#FF6347", "#FF69B4", "#FF7F50", "#FF8C00", "#FFA07A", "#FFA500", "#FFB6C1", "#FFC0CB", "#FFD700", "#FFDAB9", "#FFDEAD", "#FFE4B5", "#FFE4C4", "#FFE4E1", "#FFEBCD", "#FFEFD5", "#FFF0F5", "#FFF5EE", "#FFF8DC", "#FFFACD", "#FFFAF0", "#FFFAFA", "#FFFF00", "#FFFFE0", "#FFFFF0", "#FFFFFF"];
 
+var drawX = 0;
+var drawY = 0;
+var drawWidth = 0;
+var drawHeight = 0;
+
 function drawCar(ctx, i, j, id, dir, reverse) {
   var reverseDict = {"l": "r", "r": "l", "u": "d", "d": "u"};
   if (reverse) dir = reverseDict[dir];
@@ -115,16 +120,14 @@ function drawTarget(ctx, i, j, id) {
 }
 
 function draw(parkingLot) {
-  var height = parkingLot.length;
-  var width = parkingLot[0].length;
   var canvas = document.getElementById("canvas");
-  canvas.width = width*scale;
-  canvas.height = height*scale;
+  canvas.width = drawWidth*scale;
+  canvas.height = drawHeight*scale;
   var ctx = canvas.getContext("2d");
-  for (var i = 0; i < height; i++) {
-    for (var j = 0; j < width; j++) {
-
-      var currentSpace = parkingLot[i][j];
+  ctx.clearRect(0,0,drawWidth,drawHeight);
+  for (var i = 0; i < drawHeight; i++) {
+    for (var j = 0; j < drawWidth; j++) {
+      var currentSpace = parkingLot[i+drawY][j+drawX];
       var key = currentSpace.substring(0,1);
 
       if (key == "w")
@@ -168,8 +171,12 @@ function load(filePath) {
     reader.onload = function(e) {
       var maps = e.target.result.toLowerCase().split("!\n")
       for (var i = 0; i < maps.length; i++) {
-        frames.push(parseMap(maps[i]));
+        var frame = parseMap(maps[i]);
+        if (frame.length > 0) frames.push(frame);
+        else console.log("Warning: Dropping an empty frame!");
       }
+      drawHeight = frames[0].length;
+      drawWidth = frames[0][0].length;
       fwd();
     };
     reader.readAsText(filePath.files[0]);
@@ -201,6 +208,26 @@ function parseMap(text) {
     }
     return frame;
 }
+
+function setDrawSquare(x,y,diameter) {
+  scale = drawHeight/diameter * scale;
+  drawX = x;
+  drawY = y;
+  drawWidth = diameter;
+  drawHeight = diameter;
+  if (drawX < 0) drawX = 0;
+  if (drawY < 0) drawY = 0;
+  if (drawHeight > frames[0].length) drawHeight = frames[0].length;
+  if (drawWidth > frames[0][0].length) drawWidth = frames[0][0].length;
+  draw(frames[pos]);
+}
+
+/*function() { setDrawSquare(drawX, drawY+1, diameter); } //up
+function() { setDrawSquare(drawX, drawY-1, diameter); } //down
+function() { setDrawSquare(drawX-1, drawY, diameter); } //left
+function() { setDrawSquare(drawX+1, drawY, diameter); } //right
+function() { setDrawSquare(drawX, drawY, diameter-1); } //in
+function() { setDrawSquare(drawX, drawY, diameter+1); } //out*/
 
 window.addEventListener('load', function() {
   document.getElementById("back").addEventListener('click', back);
