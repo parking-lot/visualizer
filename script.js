@@ -173,11 +173,11 @@ function load(filePath) {
       for (var i = 0; i < maps.length; i++) {
         var frame = parseMap(maps[i]);
         if (frame.length > 0) frames.push(frame);
-        else console.log("Warning: Dropping an empty frame!");
+        else console.warn("Warning: Dropping an empty frame!");
       }
       drawHeight = frames[0].length;
       drawWidth = frames[0][0].length;
-      fwd();
+      play();
     };
     reader.readAsText(filePath.files[0]);
   }
@@ -202,7 +202,8 @@ function parseMap(text) {
     	rows[i] = rows[i].split(",");
     	var row = new Array();
         for (var j = 0; j < rows[i].length; j++) {
-            row.push(rows[i][j]);
+            if (rows[i][j] == "") console.warn("Dropped an empty cell!");
+            else row.push(rows[i][j]);
         }
         frame.push(row);
     }
@@ -210,28 +211,58 @@ function parseMap(text) {
 }
 
 function setDrawSquare(x,y,diameter) {
+  if (x < 0 || y < 0 || x+diameter > frames[pos].length || y+diameter > frames[pos][0].length) {
+    if (diameter-1 == drawHeight && x == drawX && y == drawY) {
+      if (x > 0 && y > 0) {
+        console.warn("Autofixing zoom out.");
+        x--;
+        y--;
+      }
+      else {
+        console.warn("Can't autofix zoom out.");
+        return;
+      }
+    }
+    else {
+      console.warn("Can't move drawSquare to: "+JSON.stringify({x:x, y:y, diameter:diameter}));
+      return;
+    }
+  }
   scale = drawHeight/diameter * scale;
   drawX = x;
   drawY = y;
   drawWidth = diameter;
   drawHeight = diameter;
-  if (drawX < 0) drawX = 0;
-  if (drawY < 0) drawY = 0;
-  if (drawHeight > frames[0].length) drawHeight = frames[0].length;
-  if (drawWidth > frames[0][0].length) drawWidth = frames[0][0].length;
   draw(frames[pos]);
 }
 
-/*function() { setDrawSquare(drawX, drawY+1, diameter); } //up
-function() { setDrawSquare(drawX, drawY-1, diameter); } //down
-function() { setDrawSquare(drawX-1, drawY, diameter); } //left
-function() { setDrawSquare(drawX+1, drawY, diameter); } //right
-function() { setDrawSquare(drawX, drawY, diameter-1); } //in
-function() { setDrawSquare(drawX, drawY, diameter+1); } //out*/
+function keypress(event) {
+  switch (event.code) {
+    case "KeyA":
+      setDrawSquare(drawX-1, drawY, drawHeight);
+      break;
+    case "KeyW":
+      setDrawSquare(drawX, drawY-1, drawHeight);
+      break;
+    case "KeyD":
+      setDrawSquare(drawX+1, drawY, drawHeight);
+      break;
+    case "KeyS":
+      setDrawSquare(drawX, drawY+1, drawHeight);
+      break;
+    case "KeyQ":
+      setDrawSquare(drawX, drawY, drawHeight-1);
+      break;
+    case "KeyE":
+      setDrawSquare(drawX, drawY, drawHeight+1);
+      break;
+  }
+}
 
 window.addEventListener('load', function() {
   document.getElementById("back").addEventListener('click', back);
   document.getElementById("new").addEventListener('click', function() { document.getElementById('file').click() });
   document.getElementById("play").addEventListener('click', play);
   document.getElementById("fwd").addEventListener('click', fwd);
+  window.addEventListener('keypress', keypress);
 });
