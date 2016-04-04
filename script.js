@@ -58,53 +58,52 @@ function drawParkingSpace(ctx, i, j, dir) {
     ctx.fillStyle = "#f7df1e";
     ctx.fillRect(j*scale, i*scale, scale, scale);
     ctx.fillStyle = "#A9A9A9";
-    ctx.fillRect(j*scale+5, i*scale + 5, scale, scale-10);
+    ctx.fillRect(j*scale+5, i*scale, scale-10, scale-5);
     break;
   case "d":
     ctx.fillStyle = "#f7df1e";
     ctx.fillRect(j*scale, i*scale, scale, scale);
     ctx.fillStyle = "#A9A9A9";
-    ctx.fillRect(j*scale+5, i*scale + 5, scale, scale-10);
+    ctx.fillRect(j*scale+5, i*scale+5, scale-10, scale-5);
     break;
   }
 }
 
 function drawRoad(ctx, i, j, dir) {
+  console.log(dir);
   ctx.fillStyle = "#000";
   ctx.fillRect(j*scale, i*scale, scale, scale);
-  switch(dir){
-    case "r":
+  if (dir.indexOf("r") > -1) {
       ctx.beginPath();
       ctx.moveTo(j*scale+scale-8,i*scale+10);
       ctx.lineTo(j*scale+scale,i*scale+scale/2);
       ctx.lineTo(j*scale+scale-8,i*scale+scale-10)
       ctx.strokeStyle = "#ffffff";
       ctx.stroke();
-      break;
-    case "l":
+  }
+  if (dir.indexOf("l") > -1) {
       ctx.beginPath();
       ctx.moveTo(j*scale+8,i*scale+10);
       ctx.lineTo(j*scale,i*scale+scale/2);
       ctx.lineTo(j*scale+8,i*scale+scale-10)
       ctx.strokeStyle = "#ffffff";
       ctx.stroke();
-      break;
-    case "u":
+  }
+  if (dir.indexOf("u") > -1) {
       ctx.beginPath();
       ctx.moveTo(j*scale+10,i*scale+8);
       ctx.lineTo(j*scale+scale/2,i*scale);
       ctx.lineTo(j*scale+scale-10,i*scale+8)
       ctx.strokeStyle = "#ffffff";
       ctx.stroke();
-      break;
-    case "d":
+  }
+  if (dir.indexOf("d") > -1) {
       ctx.beginPath();
       ctx.moveTo(j*scale+10,i*scale+scale-8);
       ctx.lineTo(j*scale+scale/2,i*scale+scale);
       ctx.lineTo(j*scale+scale-10,i*scale+scale-8)
       ctx.strokeStyle = "#ffffff";
       ctx.stroke();
-      break;
   }
 }
 
@@ -133,7 +132,7 @@ function draw(parkingLot) {
       if (key == "w")
         drawWall(ctx, i, j);
       else if (key == "e" || key == "x" || key == "r")
-        drawRoad(ctx, i, j, currentSpace.substring(1,2));
+        drawRoad(ctx, i, j, currentSpace.substring(1));
       else if (key == "c") {
         drawRoad(ctx, i, j, currentSpace.substring(1,2));
         drawCar(ctx, i, j, parseInt(currentSpace.match(/\d+/)[0]), currentSpace.substring(1,2));
@@ -304,10 +303,12 @@ function save() {
      for (var j = 0; j < frames[pos][i].length; j++) {
        output += frames[pos][i][j]+",";
      }
-     output += ",";
+     output += "\n";
    }
-   url = "data:application/octet-stream," + encodeURIComponent(output);
-   window.open(url, prompt("New map name:")+".map");
+   var a = document.createElement("a");
+   a.href = URL.createObjectURL(new Blob([output], {type: "text/plain"}));
+   a.download = prompt("New map name:")+".map";
+   a.click();
 }
 
 window.addEventListener('load', function() {
