@@ -282,6 +282,7 @@ function change(e) {
       changeTo += tools[i].value;
     }
   }
+  if (changeTo.length == 0) return;
   console.log(changeTo);
   i = Math.floor(e.layerY/scale);
   j = Math.floor(e.layerX/scale);
