@@ -43,7 +43,6 @@ function drawCar(ctx, i, j, id, dir, reverse) {
 function drawParkingSpace(ctx, i, j, dir) {
   switch (dir) {
   case "l":
-
     ctx.fillStyle = "#f7df1e";
     ctx.fillRect(j*scale, i*scale, scale, scale);
     ctx.fillStyle = "#A9A9A9";
@@ -110,7 +109,7 @@ function drawRoad(ctx, i, j, dir) {
 }
 
 function drawWall(ctx, i, j) {
-  ctx.fillStyle = "#f00";
+  ctx.fillStyle = "#A0522D";
   ctx.fillRect(j*scale, i*scale, scale, scale);
 }
 
@@ -120,6 +119,7 @@ function drawTarget(ctx, i, j, id) {
 }
 
 function draw(parkingLot) {
+  document.getElementById("progress").style.width = (100*frames.indexOf(parkingLot)/frames.length)+"%";
   var canvas = document.getElementById("canvas");
   canvas.width = drawWidth*scale;
   canvas.height = drawHeight*scale;
@@ -173,7 +173,7 @@ function load(filePath) {
       for (var i = 0; i < maps.length; i++) {
         var frame = parseMap(maps[i]);
         if (frame.length > 0) frames.push(frame);
-        else console.warn("Warning: Dropping an empty frame!");
+        else console.warn("Dropped an empty frame!");
       }
       drawHeight = frames[0].length;
       drawWidth = frames[0][0].length;
@@ -186,12 +186,17 @@ function load(filePath) {
 }
 
 function play() {
-  clearInterval(interval);
-  interval = setInterval(function() {
-    pos++;
-    if (pos >= frames.length) pos = 0;
-    draw(frames[pos]);
-  }, 500);
+  if (interval) {
+    clearInterval(interval);
+    interval = false;
+  }
+  else {
+    interval = setInterval(function() {
+      pos++;
+      if (pos >= frames.length) pos = 0;
+      draw(frames[pos]);
+    }, 500);
+  }
 }
 
 function parseMap(text) {
@@ -259,10 +264,60 @@ function keypress(event) {
   }
 }
 
+enableDrag = false;
+function mousemove(e) {
+  if (enableDrag && e.which == 1) {
+    change(e);
+  }
+}
+
+function change(e) {
+  clearInterval(interval);
+  interval = false;
+
+  var changeTo = "";
+  var tools = document.getElementById('draw-tools').elements;
+  for (var i = 0; i < tools.length; i++) {
+    if (tools[i].checked) {
+      changeTo += tools[i].value;
+    }
+  }
+  console.log(changeTo);
+  i = Math.floor(e.layerY/scale);
+  j = Math.floor(e.layerX/scale);
+  frames[pos][i][j] = changeTo;
+  draw(frames[pos]);
+}
+
+function seek(e) {
+  clearInterval(interval);
+  interval = false;
+
+  pos = parseInt(Math.floor(frames.length * e.layerX / e.srcElement.clientWidth));
+  draw(frames[pos]);
+}
+
+function save() {
+  output = "";
+   for (var i = 0; i < frames[pos].length; i++) {
+     for (var j = 0; j < frames[pos][i].length; j++) {
+       output += frames[pos][i][j]+",";
+     }
+     output += ",";
+   }
+   url = "data:application/octet-stream," + encodeURIComponent(output);
+   window.open(url, prompt("New map name:")+".map");
+}
+
 window.addEventListener('load', function() {
-  document.getElementById("back").addEventListener('click', back);
+  //document.getElementById("back").addEventListener('click', back);
   document.getElementById("new").addEventListener('click', function() { document.getElementById('file').click() });
   document.getElementById("play").addEventListener('click', play);
-  document.getElementById("fwd").addEventListener('click', fwd);
+  document.getElementById("save").addEventListener('click', save);
+  document.getElementById("canvas").addEventListener('click', change);
+  document.getElementById("canvas").addEventListener('dblclick', function(e) { enableDrag = true; });
+  document.getElementById("canvas").addEventListener('mousemove', mousemove);
+  document.getElementById("canvas").addEventListener('mouseup', function(e) { enableDrag = true; });
   window.addEventListener('keypress', keypress);
+  document.getElementById("meter").addEventListener('click', seek);
 });

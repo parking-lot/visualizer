@@ -1,19 +1,75 @@
+<!DOCTYPE html>
 <html>
-  <head>
-    <title>parking-lot visualizer</title>
-    <link rel="stylesheet" href="style.css">
+<head>
+    <title>parkingPrime visualizer</title>
+    <link href="style.css" rel="stylesheet">
     <script src="script.js"></script>
-  </head>
-  <body>
-    <div class="container">
-      <canvas id="canvas"></canvas>
+</head>
+<body>
+    <div id="header">
+    <span class="title">parking<span id="prime">Prime</span> visualizer</span>
+    <form id="draw-tools" name="draw-tools">
+
+        <input id="w" type="radio" name="space" value="w">
+        <label for="w">
+          <span><span></span></span>Wall
+        </label>
+        <input id="g" type="radio" name="space" value="g">
+        <label for="g">
+          <span><span></span></span>Target
+        </label>
+        <input id="e" type="radio" name="space" value="e">
+        <label for="e">
+          <span><span></span></span>Entrance
+        </label>
+        <input id="x" type="radio" name="space" value="x">
+        <label for="x">
+          <span><span></span></span>Exit
+        </label>
+        <input id="r" type="radio" name="space" value="r">
+        <label for="r">
+          <span><span></span></span>Road
+        </label>
+        <input id="p" type="radio" name="space" value="p">
+        <label for="p">
+          <span><span></span></span>Parking Space
+        </label>
+
+        <input id="r" type="checkbox" name="dirs" value="r">
+        <label for="r">
+          <span></span>Right
+        </label>
+        <input id="d" type="checkbox" name="dirs" value="d">
+        <label for="d">
+          <span></span>Down
+        </label>
+        <input id="l" type="checkbox" name="dirs" value="l">
+        <label for="l">
+          <span></span>Left
+        </label>
+        <input id="u" type="checkbox" name="dirs" value="u">
+        <label for="u">
+          <span></span>Up
+        </label>
+
+      </div>
+    </form>
     </div>
-    <div class="controls">
-      <img id="back" src="sprites/back.png">
-      <img id="new" src="sprites/load.png">
-      <img id="play" src="sprites/play.png">
-      <img id="fwd" src="sprites/fwd.png">
+    <div id="main">
+        <canvas id="canvas"></canvas>
     </div>
-    <input id="file" class="hidden" type="file" onchange='load(this)'>
-  </body>
+    <div id="controls">
+        <div id="meter">
+            <div id="progress"></div>
+        </div>
+        <div class="btns">
+            <img id="new" src="sprites/load.png">
+            <img id="save" src="sprites/save.png">
+            <img id="play" src="sprites/play.png">
+        </div>
+    </div>
+    <form>
+        <input class="hidden" id="file" onchange='load(this)' type="file">
+    </form>
+</body>
 </html>
