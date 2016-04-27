@@ -168,9 +168,10 @@ function load(filePath) {
   var reader = new FileReader();
   if (filePath.files && filePath.files[0]) {
     reader.onload = function(e) {
-      var maps = e.target.result.toLowerCase().split("!\n")
+      var maps = JSON.parse(e.target.result).frames;
+      console.log(JSON.parse(e.target.result));
       for (var i = 0; i < maps.length; i++) {
-        var frame = parseMap(maps[i]);
+        var frame = parseMap(maps[i].map);
         if (frame.length > 0) frames.push(frame);
         else console.warn("Dropped an empty frame!");
       }
@@ -200,7 +201,7 @@ function play() {
 
 function parseMap(text) {
     var frame = new Array();
-    var rows = text.split("\n");
+    var rows = text.split(";");
     for (var i = 0; i < rows.length; i++) {
     	if (rows[i] === "") break;
     	rows[i] = rows[i].split(",");
